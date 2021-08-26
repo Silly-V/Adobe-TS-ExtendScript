@@ -1,6 +1,3 @@
-/**
- * > An example of template interpolation.
- */
 function test(inStr) {
     var resultStr;
     if (inStr) {
@@ -11,11 +8,6 @@ function test(inStr) {
     }
     return resultStr;
 }
-/**
- * > An example of destructuring an array.
- *
- * > An example of an Arrow function.
- */
 function makeShapes(doc) {
     var completedItems = [];
     var _a = [0, 0], x = _a[0], y = _a[1];
@@ -29,13 +21,8 @@ function makeShapes(doc) {
 }
 function makeOtherShapes(doc) {
     var _a = [200, 0], x = _a[0], y = _a[1];
-    // Make the shapes with a one-line statement.
     CircleNames.forEach(function (m) { return doc.pathItems.ellipse(y += 10, x += 10, 50, 50); });
 }
-/**
- * > An example showing powerful typescript typing: a known-typed object can be used
- * to add several properties to another object expecting those known properties.
- */
 function initializeDocument() {
     var doc = app.activeDocument;
     var defaultColorization = {
@@ -78,14 +65,11 @@ function uiWindow() {
         w.close();
     };
     w.onClose = function () {
-        /**
-         * Set the global persistent variable. This is possible via the `#targetengine` directive.
-         */
         memoryUILocation = [this.location[0], this.location[1]];
         return true;
     };
     if (w.show() == 2) {
-        return null; // Cancelled
+        return null;
     }
     else {
         return {
@@ -100,11 +84,6 @@ function main() {
     }
     var uiResult = uiWindow();
     if (uiResult) {
-        /*
-        // This example shows an ability to transpile the spread operator syntax.
-        const copyWithSpreaderExample = { ...uiResult };
-        alert(JSON.stringify(copyWithSpreaderExample, null, 2))
-        */
         initializeDocument();
         var action = uiResult.action;
         if (action == "Make Shapes") {
@@ -152,46 +131,24 @@ if (!Array.prototype.every) {
         if (this == null) {
             throw new TypeError('this is null or not defined');
         }
-        // 1. Let O be the result of calling ToObject passing the this
-        //    value as the argument.
         var O = Object(this);
-        // 2. Let lenValue be the result of calling the Get internal method
-        //    of O with the argument "length".
-        // 3. Let len be ToUint32(lenValue).
         var len = O.length >>> 0;
-        // 4. If IsCallable(callbackfn) is false, throw a TypeError exception.
         if (typeof callbackfn !== 'function' && Object.prototype.toString.call(callbackfn) !== '[object Function]') {
             throw new TypeError();
         }
-        // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
         if (arguments.length > 1) {
             T = thisArg;
         }
-        // 6. Let k be 0.
         k = 0;
-        // 7. Repeat, while k < len
         while (k < len) {
             var kValue;
-            // a. Let Pk be ToString(k).
-            //   This is implicit for LHS operands of the in operator
-            // b. Let kPresent be the result of calling the HasProperty internal
-            //    method of O with argument Pk.
-            //   This step can be combined with c
-            // c. If kPresent is true, then
             if (k in O) {
                 var testResult;
-                // i. Let kValue be the result of calling the Get internal method
-                //    of O with argument Pk.
                 kValue = O[k];
-                // ii. Let testResult be the result of calling the Call internal method
-                // of callbackfn with T as the this value if T is not undefined
-                // else is the result of calling callbackfn
-                // and argument list containing kValue, k, and O.
                 if (T)
                     testResult = callbackfn.call(T, kValue, k, O);
                 else
                     testResult = callbackfn(kValue, k, O);
-                // iii. If ToBoolean(testResult) is false, return false.
                 if (!testResult) {
                     return false;
                 }
@@ -201,22 +158,17 @@ if (!Array.prototype.every) {
         return true;
     };
 }
-// Production steps of ECMA-262, Edition 5, 15.4.4.19
-// Reference: http://es5.github.io/#x15.4.4.19
 if (!Array.prototype.map) {
-    Array.prototype.map = function (callback /*, thisArg*/) {
+    Array.prototype.map = function (callback) {
         var T, A, k;
         if (this == null) {
             throw new TypeError('this is null or not defined');
         }
         var O = Object(this);
         var len = O.length >>> 0;
-        // If IsCallable(callback) is false, throw a TypeError exception.
-        // See: http://es5.github.com/#x9.11
         if (typeof callback !== 'function') {
             throw new TypeError(callback + ' is not a function');
         }
-        // If thisArg was supplied, let T be thisArg; else let T be undefined.
         if (arguments.length > 1) {
             T = arguments[1];
         }
@@ -239,14 +191,12 @@ if (!Array.prototype.filter) {
         'use strict';
         if (!((typeof func === 'Function' || typeof func === 'function') && this))
             throw new TypeError();
-        var len = this.length >>> 0, res = new Array(len), // preallocate array
-        t = this, c = 0, i = -1;
+        var len = this.length >>> 0, res = new Array(len), t = this, c = 0, i = -1;
         var kValue;
         if (thisArg === undefined) {
             while (++i !== len) {
-                // checks to see if the key was set
                 if (i in this) {
-                    kValue = t[i]; // in case t is changed in callback
+                    kValue = t[i];
                     if (func(t[i], i, t)) {
                         res[c++] = kValue;
                     }
@@ -255,7 +205,6 @@ if (!Array.prototype.filter) {
         }
         else {
             while (++i !== len) {
-                // checks to see if the key was set
                 if (i in this) {
                     kValue = t[i];
                     if (func.call(thisArg, t[i], i, t)) {
@@ -264,11 +213,10 @@ if (!Array.prototype.filter) {
                 }
             }
         }
-        res.length = c; // shrink down array to proper size
+        res.length = c;
         return res;
     };
 }
-// https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
     Array.prototype.find = function (predicate) {
         if (this == null) {
@@ -292,7 +240,6 @@ if (!Array.prototype.find) {
     };
 }
 if (!Array.prototype.includes) {
-    //or use Object.defineProperty
     Array.prototype.includes = function (search) {
         return !!~this.indexOf(search);
     };
@@ -344,8 +291,6 @@ if (!Array.prototype.from) {
     };
 }
 ;
-// Production steps of ECMA-262, Edition 5, 15.4.4.17
-// Reference: https://es5.github.io/#x15.4.4.17
 if (!Array.prototype.some) {
     Array.prototype.some = function (fun, thisArg) {
         'use strict';
@@ -365,11 +310,8 @@ if (!Array.prototype.some) {
         return false;
     };
 }
-// Production steps of ECMA-262, Edition 5, 15.4.4.21
-// Reference: https://es5.github.io/#x15.4.4.21
-// https://tc39.github.io/ecma262/#sec-array.prototype.reduce
 if (!Array.prototype.reduce) {
-    Array.prototype.reduce = function (callback /*, initialValue*/) {
+    Array.prototype.reduce = function (callback) {
         if (this === null) {
             throw new TypeError('Array.prototype.reduce ' +
                 'called on null or undefined');
@@ -378,11 +320,8 @@ if (!Array.prototype.reduce) {
             throw new TypeError(callback +
                 ' is not a function');
         }
-        // 1. Let O be ? ToObject(this value).
         var o = Object(this);
-        // 2. Let len be ? ToLength(? Get(O, "length")).
         var len = o.length >>> 0;
-        // Steps 3, 4, 5, 6, 7
         var k = 0;
         var value;
         if (arguments.length >= 2) {
@@ -392,30 +331,18 @@ if (!Array.prototype.reduce) {
             while (k < len && !(k in o)) {
                 k++;
             }
-            // 3. If len is 0 and initialValue is not present,
-            //    throw a TypeError exception.
             if (k >= len) {
                 throw new TypeError('Reduce of empty array ' +
                     'with no initial value');
             }
             value = o[k++];
         }
-        // 8. Repeat, while k < len
         while (k < len) {
-            // a. Let Pk be ! ToString(k).
-            // b. Let kPresent be ? HasProperty(O, Pk).
-            // c. If kPresent is true, then
-            //    i.  Let kValue be ? Get(O, Pk).
-            //    ii. Let accumulator be ? Call(
-            //          callbackfn, undefined,
-            //          « accumulator, kValue, k, O »).
             if (k in o) {
                 value = callback(value, o[k], k, o);
             }
-            // d. Increase k by 1.
             k++;
         }
-        // 9. Return accumulator.
         return value;
     };
 }
@@ -567,16 +494,13 @@ if (!('assign' in Object)) {
 }
 function clone(obj) {
     var copy;
-    // Handle the 3 simple types, and null or undefined
     if (null == obj || "object" != typeof obj)
         return obj;
-    // Handle Date
     if (obj instanceof Date) {
         copy = new Date();
         copy.setTime(obj.getTime());
         return copy;
     }
-    // Handle Array
     if (obj instanceof Array) {
         copy = [];
         for (var i = 0, len = obj.length; i < len; i++) {
@@ -584,7 +508,6 @@ function clone(obj) {
         }
         return copy;
     }
-    // Handle Object
     if (obj instanceof Object) {
         copy = {};
         for (var attr in obj) {

@@ -3,6 +3,7 @@
     "target" : "ES3",
     "outFile": "build-code/SampleTSScript_CONTENTS.js",
     "allowJs": true,
+    "removeComments": true,
     "skipLibCheck" : true,
     "lib" : ["esnext"],
     "types": [
