@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "tsc-build",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+		},
+		{
+			"label": "tsc-watch",
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+		},
+		{
+			"label": "Build-Export-Watch",
+			"isBackground": true,
+			"group": "build",
+			"args" : [
+				"-e",
+				"var x = (String.raw`${fileWorkspaceFolder}`) + '/build-code'; require(x + '/adobe-jsx-build.js').init(x, 'SampleTSScript')" // This can be very frustrating to get right the first time.
+			], 
+			"command" : ["C:\\Program Files\\nodejs\\node.exe"]
+		},
+	]
+}

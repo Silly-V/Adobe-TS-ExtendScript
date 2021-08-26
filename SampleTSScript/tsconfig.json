@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target" : "ES3",
+    "outFile": "build-code/SampleTSScript_CONTENTS.js",
+    "allowJs": true,
+    "skipLibCheck" : true,
+    "lib" : ["esnext"],
+    "types": [
+      "../../../../../Templates/Library - Illustrator/Types/Adobe", // Choose your own folder where you want to keep the types for Adobe.
+      "./polyfills/extendscript-polyfills", // This one declaration file has the behavior of pulling in all referenced code and splicing it into the 'outFile'.
+    ]
+  },
+  "include": ["./src/*.ts"],
+}
