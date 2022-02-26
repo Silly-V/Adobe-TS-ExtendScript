@@ -8,8 +8,15 @@
     "lib" : ["esnext"],
     "types": [
       "../AdobeTypes", // Choose your own folder where you want to keep the types for Adobe.
-      "./polyfills/extendscript-polyfills", // This one declaration file has the behavior of pulling in all referenced code and splicing it into the 'outFile'.
     ]
   },
-  "include": ["./src/*.ts"],
+  "include": [
+    "./polyfills/Number.ts",
+    "./polyfills/Object.ts",
+    "./polyfills/String.ts",
+    "./polyfills/_polyfill-sep.ts",
+    "./polyfills/Array.ts",
+    "./polyfills/JSON.ts",
+    "./src/*.ts"
+  ],
 }

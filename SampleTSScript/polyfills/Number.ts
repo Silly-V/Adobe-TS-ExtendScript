@@ -1,3 +1,9 @@
+interface Number {
+	toRadians(): number;
+	toDegrees(): number;
+	padZero(decimals: number): string;
+}
+
 Number.prototype.toRadians = function () {
 	return this * (Math.PI / 180);
 };
@@ -9,8 +15,8 @@ Number.prototype.padZero = function (decimals) {
 	if (typeof decimals == "undefined") {
 		decimals = 2;
 	}
-	var numStr = this.toString();
-	var decimalsFound = numStr.length;
+	let numStr = this.toString();
+	let decimalsFound = numStr.length;
 	if (decimalsFound >= decimals) {
 		return this;
 	}
@@ -20,3 +26,7 @@ Number.prototype.padZero = function (decimals) {
 	}
 	return numStr;
 };
+
+function round2 (num: number): number {
+	return Math.round(num * 100) / 100;
+}

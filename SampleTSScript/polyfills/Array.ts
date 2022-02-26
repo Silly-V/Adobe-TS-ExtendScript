@@ -1,15 +1,138 @@
+interface ArrayConstructor {
+	from<T>(obj: T): T;
+}
+
+interface Array<T> {
+	/**
+	 * Checks a shallow array for an element and returns its index. Returns -1 if not found.
+	 * @param searchElement - A value to search in the array.
+	 * @param fromIndex - Index of array to start search from.
+	 */
+	indexOf (searchElement: string | number | boolean, fromIndex?: number): number
+
+	/**
+	 * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+	 * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+	 * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+	 */
+	map<U>(callbackfn: (value: T, index?: number, array?: T[]) => U, thisArg?: any): U[];
+
+	/**
+ * Returns the elements of an array that meet the condition specified in a callback function.
+ * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+ * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+ */
+	filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
+	/**
+	* Returns the elements of an array that meet the condition specified in a callback function.
+	* @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.
+	* @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+	*/
+	filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];
+
+	reduce (func: (a: any, b: any) => any, initValue?: any): any
+	reduce <T, T1> (func: (a: T1, b: T) => T1, initValue?: T1): T1
+
+	/**
+	 * Searches an array for an object using a supplied boolean predicate function. Returns the found item or undefined.
+	 * @param {Function} predicate - Function to apply to each array item.
+	 */
+	find (predicate: (m: T) => boolean): T | undefined
+
+	/**
+	 * Creates a javascript array from an array-like object so array functions can be used.
+	 * @param {any} arrayLikeObject - Am object that is array-like but isn't a real javascript array.
+	 */
+	from (arrayLikeObject: T): T[]
+
+	/**
+	 * Runs an indexOf operation on an array and returns a boolean value.
+	 * @param search - Specified string or number to check inclusion-of.
+	 */
+	includes (search: string | number): boolean
+
+	/**
+	 * Gets last element of this array.
+	 * @returns {T | null}
+	 */
+	last (): T | null
+
+	/**
+	 * Performs the specified action for each element in an array.
+	 * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+	 * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+	 */
+	forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
+
+	/**
+	 * Adds a primitive value to a shallow array if it is not included in that array.
+	 * @param {string | number | boolean} searchElement - A value to search in the array. Returns true if the item was added.
+	 * @returns {boolean}
+	 */
+	addUnique (searchElement): boolean
+
+	/**
+	 * Removes the first matching item from a shallow array, returns false if the item did not exist.
+	 * @param {string | number | boolean} searchElement - A value to search in the array.
+	 * @returns {boolean}
+	 */
+	removeUnique (searchElement): boolean
+
+	/**
+	 * Removes an item from the array at a specified index.
+	 * @param {number} idx - Index to remove an item at. Returns true if the item was removed.
+	 * @returns {boolean}
+	 */
+	removeAtIndex (idx): boolean
+
+	/**
+	 * Removes duplicates from primitive array.
+	 */
+	makeUnique (): T[]
+
+	/**
+	 * Determines whether the specified callback function returns true for any element of an array.
+	 * @param predicate A function that accepts up to three arguments. The some method calls
+	 * the predicate function for each element in the array until the predicate returns a value
+	 * which is coercible to the Boolean value true, or until the end of the array.
+	 * @param thisArg An object to which the this keyword can refer in the predicate function.
+	 * If thisArg is omitted, undefined is used as the this value.
+	 */
+	some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
+
+	/**
+	 * Determines whether all the members of an array satisfy the specified test.
+	 * @param predicate A function that accepts up to three arguments. The every method calls
+	 * the predicate function for each element in the array until the predicate returns a value
+	 * which is coercible to the Boolean value false, or until the end of the array.
+	 * @param thisArg An object to which the this keyword can refer in the predicate function.
+	 * If thisArg is omitted, undefined is used as the this value.
+	 */
+	every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];
+	
+	/**
+	 * Determines whether all the members of an array satisfy the specified test.
+	 * @param predicate A function that accepts up to three arguments. The every method calls
+	 * the predicate function for each element in the array until the predicate returns a value
+	 * which is coercible to the Boolean value false, or until the end of the array.
+	 * @param thisArg An object to which the this keyword can refer in the predicate function.
+	 * If thisArg is omitted, undefined is used as the this value.
+	 */
+	every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;
+}
+
 if (!Array.prototype.indexOf) {
-	Array.prototype.indexOf = function (searchElement, fromIndex) {
-		var k;
+	Array.prototype.indexOf = function (searchElement: string | number | boolean, fromIndex: number): number {
+		let k;
 		if (this == null) {
 			throw new TypeError('"this" is null or not defined');
 		}
-		var o = Object(this);
-		var len = o.length >>> 0;
+		let o = Object(this);
+		let len = o.length >>> 0;
 		if (len === 0) {
 			return -1;
 		}
-		var n = +fromIndex || 0;
+		let n = +fromIndex || 0;
 		if (Math.abs(n) === Infinity) {
 			n = 0;
 		}
@@ -25,22 +148,22 @@ if (!Array.prototype.indexOf) {
 		}
 		return -1;
 	};
-};
+}
 
 if (!Array.prototype.every) {
   Array.prototype.every = function (callbackfn, thisArg) {
     'use strict';
-    var T, k;
+    let T, k;
     if (this == null) {
       throw new TypeError('this is null or not defined');
     }
     // 1. Let O be the result of calling ToObject passing the this
     //    value as the argument.
-    var O = Object(this);
+    let O = Object(this);
     // 2. Let lenValue be the result of calling the Get internal method
     //    of O with the argument "length".
     // 3. Let len be ToUint32(lenValue).
-    var len = O.length >>> 0;
+    let len = O.length >>> 0;
     // 4. If IsCallable(callbackfn) is false, throw a TypeError exception.
     if (typeof callbackfn !== 'function' && Object.prototype.toString.call(callbackfn) !== '[object Function]') {
       throw new TypeError();
@@ -53,7 +176,7 @@ if (!Array.prototype.every) {
     k = 0;
     // 7. Repeat, while k < len
     while (k < len) {
-      var kValue;
+      let kValue;
       // a. Let Pk be ToString(k).
       //   This is implicit for LHS operands of the in operator
       // b. Let kPresent be the result of calling the HasProperty internal
@@ -61,7 +184,7 @@ if (!Array.prototype.every) {
       //   This step can be combined with c
       // c. If kPresent is true, then
       if (k in O) {
-        var testResult;
+        let testResult;
         // i. Let kValue be the result of calling the Get internal method
         //    of O with argument Pk.
         kValue = O[k];
@@ -121,12 +244,12 @@ if (!Array.prototype.map) {
 if (!Array.prototype.filter) {
 	Array.prototype.filter = function (func, thisArg) {
 		'use strict';
-		if ( ! ((typeof func === 'Function' || typeof func === 'function') && this) )
+		if ( ! ((typeof func === ('Function' as any) || typeof func === 'function') && this) )
 				throw new TypeError();
-		var len = this.length >>> 0,
-				res = new Array(len), // preallocate array
+		const len = this.length >>> 0;
+		let	res = new Array(len), // preallocate array
 				t = this, c = 0, i = -1;
-		var kValue;
+		let kValue;
 		if (thisArg === undefined) {
 			while (++i !== len) {
 				// checks to see if the key was set
@@ -153,21 +276,42 @@ if (!Array.prototype.filter) {
 	};
 }
 
+// https://github.com/jsPolyfill/Array.prototype.findIndex/blob/master/findIndex.js
+if (!Array.prototype.findIndex) {
+	Array.prototype.findIndex = Array.prototype.findIndex || function(callback) {
+		if (this === null) {
+			throw new TypeError('Array.prototype.findIndex called on null or undefined');
+		} else if (typeof callback !== 'function') {
+			throw new TypeError('callback must be a function');
+		}
+		var list = Object(this);
+		// Makes sures is always has an positive integer as length.
+		var length = list.length >>> 0;
+		var thisArg = arguments[1];
+		for (var i = 0; i < length; i++) {
+			if ( callback.call(thisArg, list[i], i, list) ) {
+				return i;
+			}
+		}
+		return -1;
+	};
+}
+
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
 	Array.prototype.find = function (predicate) {
 		if (this == null) {
 			throw TypeError('"this" is null or not defined');
 		}
-		var o = Object(this);
-		var len = o.length >>> 0;
+		const o = Object(this);
+		const len = o.length >>> 0;
 		if (typeof predicate !== 'function') {
 			throw TypeError('predicate must be a function');
 		}
-		var thisArg = arguments[1];
-		var k = 0;
+		const thisArg = arguments[1];
+		let k = 0;
 		while (k < len) {
-			var kValue = o[k];
+			let kValue = o[k];
 			if (predicate.call(thisArg, kValue, k, o)) {
 				return kValue;
 			}
@@ -191,16 +335,16 @@ if (!Array.prototype.last) {
 		}
 		return this[this.length - 1];
 	};
-};
+}
 
 if (!Array.prototype.forEach) {
 	Array.prototype.forEach = function (callback, thisArg) {
-		var T, k;
+		let T, k;
 		if (this == null) {
 			throw new TypeError(' this is null or not defined');
 		}
-		var O = Object(this);
-		var len = O.length >>> 0;
+		const O = Object(this);
+		const len = O.length >>> 0;
 		if (typeof callback !== "function") {
 			throw new TypeError(callback + ' is not a function');
 		}
@@ -209,7 +353,7 @@ if (!Array.prototype.forEach) {
 		}
 		k = 0;
 		while (k < len) {
-			var kValue;
+			let kValue;
 			if (k in O) {
 				kValue = O[k];
 				callback.call(T, kValue, k, O);
@@ -219,11 +363,11 @@ if (!Array.prototype.forEach) {
 	};
 };
 
-if (!Array.prototype.from) {
-	Array.prototype.from = function (arrayLikeObject) {
-		var arr = [];
-		var thisItem;
-		for (var i = 0; i < arrayLikeObject.length; i++) {
+if (!Array.from) {
+	Array.from = function (arrayLikeObject) {
+		const arr = [];
+		let thisItem;
+		for (let i = 0; i < arrayLikeObject.length; i++) {
 			thisItem = arrayLikeObject[i];
 			arr.push(thisItem);
 		}
@@ -242,9 +386,9 @@ if (!Array.prototype.some) {
     if (typeof fun !== 'function') {
       throw new TypeError();
     }
-    var t = Object(this);
-    var len = t.length >>> 0;
-    for (var i = 0; i < len; i++) {
+    const t = Object(this);
+    const len = t.length >>> 0;
+    for (let i = 0; i < len; i++) {
       if (i in t && fun.call(thisArg, t[i], i, t)) {
         return true;
       }
@@ -267,12 +411,12 @@ if (!Array.prototype.reduce) {
 				' is not a function');
 		}
 		// 1. Let O be ? ToObject(this value).
-		var o = Object(this);
+		const o = Object(this);
 		// 2. Let len be ? ToLength(? Get(O, "length")).
-		var len = o.length >>> 0;
+		const len = o.length >>> 0;
 		// Steps 3, 4, 5, 6, 7
-		var k = 0;
-		var value;
+		let k = 0;
+		let value;
 		if (arguments.length >= 2) {
 			value = arguments[1];
 		} else {
@@ -315,28 +459,28 @@ if (!Array.prototype.addUnique) {
 		}
 		return false;
 	};
-};
+}
 
 if (!Array.prototype.removeUnique) {
 	Array.prototype.removeUnique = function (searchElement) {
 		var idx = this.indexOf(searchElement);
-		if(idx > -1){
+		if (idx > -1) {
 			this.splice(idx, 1);
 			return true;
 		}
 		return false;
 	};
-};
+}
 
 if (!Array.prototype.removeAtIndex) {
 	Array.prototype.removeAtIndex = function (idx) {
-		if(idx > -1){
+		if (idx > -1) {
 			this.splice(idx, 1);
 			return true;
 		}
 		return false;
 	};
-};
+}
 
 Array.prototype.makeUnique = function () {
 	return this.sort().filter(function (current, index, array) {
