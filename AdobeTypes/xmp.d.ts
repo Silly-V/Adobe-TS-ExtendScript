@@ -1277,16 +1277,16 @@ declare class XMPUtils {
 	 * Aliases are handled implicitly, because the associated actual is removed.
 	 */
 	removeProperties (
-		/** The XMPMeta object. */
+		/** The `XMPMeta` object. */
 		xmpObj: XMPMeta,
 		/** Optional. The namespace URI string. See Schema namespace string constants. Must be supplied if a property name is supplied. */
 		schemaNS: XMPNamespaceAliasConstants,
 		/** Optional. The property name string. Can be a general path expression. */
 		propName: string,
 		/** Option flags that control the deletion operation. A logical OR of these bit-flag constants:
-		 * - XMPConst.REMOVE_ALL_PROPERTIES - Remove internal and external properties. By default, removes only external properties. Applies only to top-level properties.
-		 * - XMPConst.REMOVE_INCLUDE_ALIASES - Remove aliases defined in the namespace. If the property name is supplied, removes it regardless of this option.
-		 * - Default is 0.
+		 * - `XMPConst.REMOVE_ALL_PROPERTIES` - Remove internal and external properties. By default, removes only external properties. Applies only to top-level properties.
+		 * - `XMPConst.REMOVE_INCLUDE_ALIASES` - Remove aliases defined in the namespace. If the property name is supplied, removes it regardless of this option.
+		 * - Default is `0`.
 		 */
 		options: 0 | XMPConst.REMOVE_ALL_PROPERTIES | XMPConst.REMOVE_INCLUDE_ALIASES,
 	): void
@@ -1296,7 +1296,7 @@ declare class XMPUtils {
 	 * Recognizes a large set of separator characters, including semicolons, commas, tab, return, linefeed, and multiple spaces.
 	 */
 	separateArrayItems (
-		/** The XMPMeta object containing the array. */
+		/** The `XMPMeta` object containing the array. */
 		xmpObj: XMPMeta,
 		/** The namespace URI string. See Schema namespace string constants. */
 		schemaNS: XMPNamespaceAliasConstants,
@@ -1304,12 +1304,12 @@ declare class XMPUtils {
 		arrayName: string,
 		/**
 		 * Option flags that control how the array property is updated from the separated string. A logical OR of these bit-flag constants:
-		 * - XMPConst.APPEND_ALL_PROPERTIES - Include both internal and external properties. By default, copies only external properties. This applies only to top-level properties.
-		 * - XMPConst.APPEND_REPLACE_OLD_VALUES - Replace the values of existing properties with the value from the source object. By default, existing values are retained.
+		 * - `XMPConst.APPEND_ALL_PROPERTIES` - Include both internal and external properties. By default, copies only external properties. This applies only to top-level properties.
+		 * - `XMPConst.APPEND_REPLACE_OLD_VALUES` - Replace the values of existing properties with the value from the source object. By default, existing values are retained.
 		 * This applies to properties at all levels of hierarchy.
-		 * - XMPConst.APPEND_DELETE_EMPTY_VALUES - Delete properties if the new value is empty.
-		 * - XMPConst.SEPARATE_ALLOW_COMMAS - Allow commas in item values. If not specified, an item containing a comma (such as “LastName, FirstName”) is separated into two array items.
-		 * - Default is 0. */
+		 * - `XMPConst.APPEND_DELETE_EMPTY_VALUES` - Delete properties if the new value is empty.
+		 * - `XMPConst.SEPARATE_ALLOW_COMMAS` - Allow commas in item values. If not specified, an item containing a comma (such as “LastName, FirstName”) is separated into two array items.
+		 * - Default is `0`. */
 		arrayOptions: 0 | XMPConst.APPEND_ALL_PROPERTIES | XMPConst.APPEND_REPLACE_OLD_VALUES | XMPConst.APPEND_DELETE_EMPTY_VALUES | XMPConst.SEPARATE_ALLOW_COMMAS,
 		/** The string containing the concatenated array values, as returned by catenateArrayItems(). */
 		concatString: string,
