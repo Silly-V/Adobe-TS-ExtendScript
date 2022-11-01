@@ -1317,24 +1317,34 @@ declare class XMPUtils {
 }
 
 /*
-	"// * Making an array which contains object elements with properties."
-	var theFile = File("~/Desktop/test.psd");
-	if (xmpLib==undefined) var xmpLib = new ExternalObject('lib:AdobeXMPScript');  
-	var xmpFile = new XMPFile(theFile.fsName, XMPConst.UNKNOWN, XMPConst.OPEN_FOR_UPDATE);  
-	var xmpPackets = xmpFile.getXMP();  
-	var mt = new XMPMeta(xmpPackets.serialize());
-	XMPMeta.registerNamespace("http://ns.my-special-namespace/1.0/", "myNs:");
 
-	var x = { name : "ABC", width : 50, height : 100 };
-	mt.setProperty("http://ns.my-special-namespace/1.0/", "mySpecialArray", "", XMPConst.PROP_IS_ARRAY);
+// * Making an array which contains object elements with properties.
+var theFile = File("~/Desktop/test.pdf");
+if (xmpLib==undefined) var xmpLib = new ExternalObject('lib:AdobeXMPScript');  
+var xmpFile = new XMPFile(theFile.fsName, XMPConst.UNKNOWN, XMPConst.OPEN_FOR_UPDATE);  
+var xmpPackets = xmpFile.getXMP();  
+var mt = new XMPMeta(xmpPackets.serialize());
+XMPMeta.registerNamespace("http://ns.my-special-namespace/1.0/", "myNs:");
 
-	mt.appendArrayItem("http://ns.my-special-namespace/1.0/", "mySpecialArray", null, XMPConst.PROP_IS_STRUCT);
-	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[1]", XMPConst.NS_RDF, "name", x.name);
-	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[1]", XMPConst.NS_RDF, "width", x.width);
-	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[1]", XMPConst.NS_RDF, "height", x.height);
+var arrayToSet = [
+    { name : "ABC", width : 50, height : 100 },
+    { name : "Name-2", width : 125, height : 75 },
+];
+mt.setProperty("http://ns.my-special-namespace/1.0/", "mySpecialArray", "", XMPConst.PROP_IS_ARRAY);
 
-	if (xmpFile.canPutXMP(xmpPackets)) {
-		xmpFile.putXMP(mt);
-	}
-	xmpFile.closeFile(XMPConst.CLOSE_UPDATE_SAFELY);
+mt.appendArrayItem("http://ns.my-special-namespace/1.0/", "mySpecialArray", null, XMPConst.PROP_IS_STRUCT);
+for (var i = 0; i < arrayToSet.length; i++) {
+    var oneBasedIndex = i + 1;
+    var x = arrayToSet[i];
+    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "name", x.name);
+    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "width", x.width);
+    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "height", x.height);
+}
+
+if (xmpFile.canPutXMP(xmpPackets)) {
+    xmpFile.putXMP(mt);
+}
+xmpFile.closeFile(XMPConst.CLOSE_UPDATE_SAFELY);
+// app.openFile(theFile); // View the result XMP in the app
+
 */
