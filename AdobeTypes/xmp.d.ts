@@ -326,7 +326,7 @@ declare type XMPIteratorConstants =	XMPConst.ITERATOR_JUST_CHILDREN |	XMPConst.I
 	XMPConst.ITERATOR_INCLUDE_ALIASES |	XMPConst.ITERATOR_OMIT_QUALIFIERS
 
 /**
- * This object is returned by XMPMeta.:ref:xmpmeta-resolveAlias. The read-only properties describe an XMP metadata alias.
+ * This object is returned by `XMPMeta.:ref:xmpmeta-resolveAlias`. The read-only properties describe an XMP metadata alias.
  */
 declare type XMPAliasInfo = {
 	/**
@@ -446,7 +446,7 @@ declare class XMPFile {
 
 	/**
 	 * Reports whether XMP metadata of a given size can be updated for this file. This is particularly important if the packet size is increased.
-	 * Considers only the length of the serialized packet; does not keep the provided XMP. Use putXMP() to actually update the XMP in the open file.
+	 * Considers only the length of the serialized packet; does not keep the provided XMP. Use `putXMP()` to actually update the XMP in the open file.
 	 * Returns true if the given XMP can be put into this file.
 	 * @param input • The XMP metadata as an XMPMeta object. • The XMP metadata as a string containing an XMP packet. • The XMP metadata as an Array of Number containing raw XMP packet data.
 	 */
@@ -480,7 +480,7 @@ declare class XMPFile {
 	getFileInfo (): XMPFileInfo
 
 	/**
-	 * Supplies new XMP metadata for this file. The file is not actually written until closeFile() is called.
+	 * Supplies new XMP metadata for this file. The file is not actually written until `closeFile()` is called.
 	 * The options provided when the file was opened determine whether that function reconciles the XMP with other forms of metadata;
 	 * that is, whether any legacy metadata is also updated to be consistent with the XMP metadata.
 	 * @param input • The XMP metadata as an XMPMeta object. • The XMP metadata as a string containing an XMP packet. • The XMP metadata as an Array of Number containing raw XMP packet data.
@@ -489,7 +489,7 @@ declare class XMPFile {
 }
 
 /**
- * This object is returned by XMPFile.:ref:xmpfile-getFileInfo. The read-only properties describe the file represented by the XMPFile object.
+ * This object is returned by `XMPFile.:ref:xmpfile-getFileInfo`. The read-only properties describe the file represented by the `XMPFile` object.
  * > **Note**: This object is not related to the XMP File Info dialog that Adobe Creative Suite 4 applications use to display metadata.
  */
 declare class XMPFileInfo {
@@ -511,7 +511,7 @@ declare class XMPFileInfo {
 declare class XMPIterator {
 	/**
 	 * Retrieves the next item in the metadata.
-	 * Returns an XMPProperty object, or null if there are no more items.
+	 * Returns an `XMPProperty` object, or null if there are no more items.
 	 */
 	next (): XMPProperty | null
 
@@ -934,7 +934,7 @@ declare class XMPMeta {
 		schemaNS: XMPNamespaceAliasConstants,
 		/** The array-type property name string. Can be a general path expression. */
 		arrayName: string,
-		/** Number. The 1-based position index at which to insert the new item. Use XMPConst.ARRAY_LAST_ITEM to replace the last existing item in the array. */
+		/** Number. The 1-based position index at which to insert the new item. Use `XMPConst.ARRAY_LAST_ITEM` to replace the last existing item in the array. */
 		itemIndex: number,
 		/** String. The new item value string. Pass null for array items that do not have values. */
 		itemValue: string,
@@ -984,7 +984,7 @@ declare class XMPMeta {
 		 * - `XMPConst.PROP_IS_ARRAY` - The item is an array (of type alt, bag, or seq).
 		 * - `XMPConst.PROP_IS_STRUCT` - The item is a structure with nested fields.
 		*/
-		options: 0 | XMPConst.PROP_IS_ARRAY | XMPConst.PROP_IS_STRUCT,
+		options?: 0 | XMPConst.PROP_IS_ARRAY | XMPConst.PROP_IS_STRUCT,
 	): void
 
 	/** Attaches a new qualifier to a metadata property. A qualifier can be added to a simple property, an array item, a struct field, or another qualifier. */
@@ -1010,7 +1010,7 @@ declare class XMPMeta {
 
 	/**
 	 * Sets the value of a simple metadata property, creating the property if necessary, or creates a new array or structure property.
-	 * For creating array and structure properties, setArrayItem() and setStructField() are preferred.
+	 * For creating array and structure properties, `setArrayItem()` and `setStructField()` are preferred.
 	 * Use this call to create or set top-level, simple properties, or after using the path-composition functions in the XMPUtils object.
 	 */
 	setProperty (
@@ -1327,24 +1327,23 @@ var mt = new XMPMeta(xmpPackets.serialize());
 XMPMeta.registerNamespace("http://ns.my-special-namespace/1.0/", "myNs:");
 
 var arrayToSet = [
-    { name : "ABC", width : 50, height : 100 },
-    { name : "Name-2", width : 125, height : 75 },
+	{ name : "ABC", width : 50, height : 100 },
+	{ name : "Name-2", width : 125, height : 75 },
 ];
 mt.setProperty("http://ns.my-special-namespace/1.0/", "mySpecialArray", "", XMPConst.PROP_IS_ARRAY);
 
-mt.appendArrayItem("http://ns.my-special-namespace/1.0/", "mySpecialArray", null, XMPConst.PROP_IS_STRUCT);
 for (var i = 0; i < arrayToSet.length; i++) {
-    var oneBasedIndex = i + 1;
-    var x = arrayToSet[i];
-    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "name", x.name);
-    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "width", x.width);
-    mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "height", x.height);
+	var oneBasedIndex = i + 1;
+	var x = arrayToSet[i];
+	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "name", x.name);
+	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "width", x.width);
+	mt.setStructField("http://ns.my-special-namespace/1.0/", "mySpecialArray[" + oneBasedIndex + "]", XMPConst.NS_RDF, "height", x.height);
 }
 
 if (xmpFile.canPutXMP(xmpPackets)) {
-    xmpFile.putXMP(mt);
+	xmpFile.putXMP(mt);
 }
 xmpFile.closeFile(XMPConst.CLOSE_UPDATE_SAFELY);
-// app.openFile(theFile); // View the result XMP in the app
+// app.open(theFile); // View the result XMP in the app
 
 */
